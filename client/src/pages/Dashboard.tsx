@@ -38,9 +38,6 @@ import {
   X,
 } from "lucide-react";
 
-const brandMark = "/manus-storage/reviewsniper-reticle_08e036e8.png";
-const signalGrid = "/manus-storage/reviewsniper-signal-grid_ea64419c.png";
-
 const primaryNav = [
   { label: "Dashboard", icon: LayoutDashboard },
   { label: "Crisis Leads", icon: Target },
@@ -84,7 +81,7 @@ type Pagination = { page: number; limit: number; total: number; totalPages: numb
 function BrandLockup() {
   return (
     <div className="dashboard-brand">
-      <img src={brandMark} alt="ReviewSniper reticle" />
+      <img src="/images/logo.png" alt="ReviewSniper logo" style={{ width: 26, height: 26, objectFit: "contain" }} />
       <div className="dashboard-brand-name"><span>Review</span><strong>Sniper</strong></div>
     </div>
   );
@@ -208,7 +205,7 @@ export default function DashboardPage() {
   ];
 
   return (
-    <main className="dashboard-page" style={{ backgroundImage: `url(${signalGrid})` }}>
+    <main className="dashboard-page" style={{ backgroundImage: `url(/images/background.png)` }}>
       <button className="mobile-menu-button" aria-label="Open navigation" onClick={() => setSidebarOpen(true)}><Menu size={20} /></button>
       {sidebarOpen && <button className="sidebar-scrim" aria-label="Close navigation" onClick={() => setSidebarOpen(false)} />}
       <aside className={`dashboard-sidebar ${sidebarOpen ? "dashboard-sidebar--open" : ""}`}>

@@ -18,9 +18,6 @@ import {
   UserRound,
 } from "lucide-react";
 
-const brandMark = "/manus-storage/reviewsniper-reticle_08e036e8.png";
-const skyline = "/manus-storage/reviewsniper-skyline_ad533cd9.png";
-
 const benefits = [
   { icon: Target, label: "Real-time crisis leads", detail: "Surface high-intent reputation signals." },
   { icon: ShieldCheck, label: "High-value niches", detail: "Focus your agency on the right markets." },
@@ -41,7 +38,7 @@ function GoogleIcon() {
 function BrandLockup({ compact = false }: { compact?: boolean }) {
   return (
     <div className={`brand-lockup ${compact ? "brand-lockup--compact" : ""}`}>
-      <img src={brandMark} alt="ReviewSniper reticle" className="brand-mark" />
+      <img src="/images/logo.png" alt="ReviewSniper logo" className="brand-mark" />
       <div>
         <div className="brand-name">
           <span>Review</span><strong>Sniper</strong>
@@ -103,7 +100,7 @@ export default function AuthPage() {
 
   return (
     <main className="auth-page">
-      <section className="auth-story" style={{ backgroundImage: `url(${skyline})` }}>
+      <section className="auth-story" style={{ backgroundImage: `url(/images/background.png)` }}>
         <div className="story-glow" />
         <div className="story-topline">
           <BrandLockup />
