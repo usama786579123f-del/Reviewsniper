@@ -11,6 +11,12 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import AuthPage from "./pages/Home";
 import DashboardPage from "./pages/Dashboard";
 import CrisisLeadsPage from "./pages/CrisisLeads";
+import SavedLeadsPage from "./pages/SavedLeads";
+import ExportLeadsPage from "./pages/ExportLeads";
+import AnalyticsPage from "./pages/Analytics";
+import EmailAlertsPage from "./pages/EmailAlerts";
+import AgenciesPage from "./pages/Agencies";
+import TeamMembersPage from "./pages/TeamMembers";
 
 function Router() {
   return (
@@ -20,6 +26,12 @@ function Router() {
       <Route path="/signup" component={AuthPage} />
       <Route path="/dashboard" component={DashboardPage} />
       <Route path="/crisis-leads" component={CrisisLeadsPage} />
+      <Route path="/saved-leads" component={SavedLeadsPage} />
+      <Route path="/export-leads" component={ExportLeadsPage} />
+      <Route path="/analytics" component={AnalyticsPage} />
+      <Route path="/email-alerts" component={EmailAlertsPage} />
+      <Route path="/agencies" component={AgenciesPage} />
+      <Route path="/team-members" component={TeamMembersPage} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>

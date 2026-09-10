@@ -153,4 +153,57 @@ router.get("/stats", async (_req, res) => {
   }
 });
 
+/**
+ * GET /api/analytics
+ * Real numbers only: leads found per day (last 7 days), current status
+ * breakdown, and the niches with the most leads. No fabricated sources
+ * or agency data - we only have one lead source (Google Maps).
+ */
+router.get("/analytics", async (_req, res) => {
+  try {
+    const db = await getDb();
+    const leads = db.collection("leads");
+
+    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+
+    const [byDay, byStatus, byNiche, total] = await Promise.all([
+      leads
+        .aggregate([
+          { $match: { scraped_at: { $gte: sevenDaysAgo } } },
+          {
+            $group: {
+              _id: { $dateToString: { format: "%Y-%m-%d", date: "$scraped_at" } },
+              count: { $sum: 1 },
+            },
+          },
+          { $sort: { _id: 1 } },
+        ])
+        .toArray(),
+      leads
+        .aggregate([{ $group: { _id: "$status", count: { $sum: 1 } } }])
+        .toArray(),
+      leads
+        .aggregate([
+          { $group: { _id: "$niche", count: { $sum: 1 } } },
+          { $sort: { count: -1 } },
+          { $limit: 5 },
+        ])
+        .toArray(),
+      leads.countDocuments({}),
+    ]);
+
+    res.json({
+      totalLeads: total,
+      leadsByDay: byDay.map((d) => ({ date: d._id, count: d.count })),
+      leadsByStatus: byStatus.map((s) => ({ status: s._id || "new", count: s.count })),
+      topNiches: byNiche.map((n) => ({ niche: n._id, count: n.count })),
+    });
+  } catch (err) {
+    console.error("[api] GET /analytics failed:", err);
+    res.status(503).json({
+      error: "Could not reach the database. Check MONGODB_URI in your .env file.",
+    });
+  }
+});
+
 export default router;
