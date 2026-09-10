@@ -115,6 +115,7 @@ export default function DashboardPage() {
   const [error, setError] = useState<string | null>(null);
 
   const [page, setPage] = useState(1);
+  const [refreshKey, setRefreshKey] = useState(0);
   const [niche, setNiche] = useState<string>("");
   const [starRange, setStarRange] = useState<{ min: number; max: number }>({ min: 1, max: 2 });
   const [searchTerm, setSearchTerm] = useState("");
@@ -169,7 +170,7 @@ export default function DashboardPage() {
     return () => {
       cancelled = true;
     };
-  }, [page, niche, starRange]);
+  }, [page, niche, starRange, refreshKey]);
 
   function chooseNav(label: string) {
     setActiveItem(label);
@@ -247,7 +248,7 @@ export default function DashboardPage() {
             <div><p className="eyebrow">{activeItem === "Dashboard" ? "Overview" : activeItem}</p><h1>{activeItem}</h1><p className="dashboard-subtitle">{pagination && pagination.total > 0 ? "Live intelligence from your connected review source." : "Your live intelligence will appear here once a review source is connected."}</p></div>
             <div className="dashboard-heading-actions">
               <span className="last-updated"><Activity size={14} /> {pagination ? "Live sync" : "No live sync"}</span>
-              <button className="refresh-button" onClick={() => setPage((p) => p)}><SlidersHorizontal size={15} /> Refresh</button>
+              <button className="refresh-button" onClick={() => setRefreshKey((k) => k + 1)}><SlidersHorizontal size={15} /> Refresh</button>
             </div>
           </div>
 

@@ -1,8 +1,8 @@
 /*
- * Crisis Leads — dedicated list page. Same sidebar/topbar shell as the
+ * Crisis Leads - dedicated list page. Same sidebar/topbar shell as the
  * Dashboard, but focused entirely on the leads table with the richer
  * column set from the reference design (location, niche tag, added time).
- * Every value shown comes from the real /api/leads + /api/stats endpoints —
+ * Every value shown comes from the real /api/leads + /api/stats endpoints -
  * no sample/fake rows. Fields the reference mockup showed that our data
  * doesn't have (email address, decimal star precision) are simply left out
  * rather than invented.
@@ -82,7 +82,7 @@ type Lead = {
 type Stats = { totalLeads: number; newLeads: number; contactedAgencies: number; conversionRate: number };
 type Pagination = { page: number; limit: number; total: number; totalPages: number };
 
-// Our niche strings look like "Dental Clinics in Dubai" — split that into a
+// Our niche strings look like "Dental Clinics in Dubai" - split that into a
 // short tag ("Dental Clinics") and a place ("Dubai") for display.
 function splitNiche(niche: string): { tag: string; place: string } {
   const match = niche.match(/^(.*?)\s+in\s+(.+)$/i);
@@ -121,7 +121,7 @@ function ComingSoonButton({ children, className = "" }: { children: React.ReactN
       className={className}
       onClick={() =>
         toast.info("This action is awaiting your backend/API connection", {
-          description: "The UI is ready — wire this button up to your workflow when you're ready.",
+          description: "The UI is ready - wire this button up to your workflow when you're ready.",
         })
       }
     >
@@ -140,6 +140,7 @@ export default function CrisisLeadsPage() {
   const [error, setError] = useState<string | null>(null);
 
   const [page, setPage] = useState(1);
+  const [refreshKey, setRefreshKey] = useState(0);
   const [niche, setNiche] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [selected, setSelected] = useState<Set<string>>(new Set());
@@ -180,7 +181,7 @@ export default function CrisisLeadsPage() {
     return () => {
       cancelled = true;
     };
-  }, [page, niche]);
+  }, [page, niche, refreshKey]);
 
   async function updateLeadStatus(id: string, status: Lead["status"]) {
     try {
@@ -304,7 +305,7 @@ export default function CrisisLeadsPage() {
             </div>
             <div className="dashboard-heading-actions">
               <span className="last-updated">Last updated: {new Date().toLocaleDateString()}</span>
-              <button className="refresh-button" onClick={() => setPage((p) => p)}>Refresh</button>
+              <button className="refresh-button" onClick={() => setRefreshKey((k) => k + 1)}>Refresh</button>
             </div>
           </div>
 
@@ -362,7 +363,7 @@ export default function CrisisLeadsPage() {
                     <div className="empty-target"><Target size={25} /></div>
                   </div>
                   <h3>No connected leads yet</h3>
-                  <p>Your scraper hasn't found a matching crisis review yet. This list fills in automatically as new leads are found — no sample records are shown.</p>
+                  <p>Your scraper hasn't found a matching crisis review yet. This list fills in automatically as new leads are found - no sample records are shown.</p>
                 </div>
               ) : (
                 <div className="leads-table-wrap">
