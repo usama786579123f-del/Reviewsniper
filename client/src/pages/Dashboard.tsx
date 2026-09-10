@@ -1,7 +1,7 @@
 /*
  * Crisis Command / Airy Precision: the dashboard is an honest, connection-ready
  * command shell. It shows no fabricated leads, metrics, reviews, agencies, or
- * users — everything below is fetched from the live /api/leads and /api/stats
+ * users - everything below is fetched from the live /api/leads and /api/stats
  * endpoints, and falls back to the original empty state when there's genuinely
  * nothing to show yet.
  */
@@ -127,7 +127,7 @@ export default function DashboardPage() {
       .get<Stats>("/api/stats")
       .then((res) => setStats(res.data))
       .catch(() => {
-        // Stat cards just keep showing "—" — handled by the null check below.
+        // Stat cards just keep showing "-" - handled by the null check below.
       });
   }, [leads.length]);
 
@@ -174,6 +174,10 @@ export default function DashboardPage() {
   function chooseNav(label: string) {
     setActiveItem(label);
     setSidebarOpen(false);
+    if (label === "Crisis Leads") {
+      window.location.href = "/crisis-leads";
+      return;
+    }
     if (label !== "Dashboard") {
       toast.info(`${label} is ready for connection`, { description: "No data is shown until your backend/API is connected." });
     }
@@ -231,7 +235,7 @@ export default function DashboardPage() {
 
       <section className="dashboard-main">
         <header className="dashboard-topbar">
-          <div className="topbar-search"><Search size={17} /><input aria-label="Search workspace" placeholder="Search businesses, niches, or keywords..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} /><kbd>⌘ K</kbd></div>
+          <div className="topbar-search"><Search size={17} /><input aria-label="Search workspace" placeholder="Search businesses, niches, or keywords..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} /><kbd>Ctrl+K</kbd></div>
           <div className="topbar-actions">
             <button className="topbar-icon" aria-label="Notifications" onClick={() => toast.info("Notifications are waiting for live activity")}><Bell size={18} /><span className="notification-dot" /></button>
             <div className="workspace-identity"><div className="workspace-avatar">RS</div><div><strong>Workspace</strong><span>{pagination ? `${pagination.total} leads synced` : "Awaiting connection"}</span></div><ChevronDown size={15} /></div>
@@ -252,7 +256,7 @@ export default function DashboardPage() {
               <article className="stat-card" key={label}>
                 <div className={`stat-icon stat-icon--${iconTone}`}><Icon size={18} /></div>
                 <div className="stat-label">{label}</div>
-                <div className="stat-value">{value !== undefined ? value : "—"}</div>
+                <div className="stat-value">{value !== undefined ? value : "-"}</div>
                 <div className="stat-helper">{value !== undefined ? "" : helper}</div>
               </article>
             ))}
@@ -283,7 +287,7 @@ export default function DashboardPage() {
                   setPage(1);
                 }}
               >
-                {starRange.min === starRange.max ? `${starRange.min}★ only` : "1★ – 2★ reviews"} <ChevronDown size={14} />
+                {starRange.min === starRange.max ? `${starRange.min}* only` : "1* - 2* reviews"} <ChevronDown size={14} />
               </button>
 
               <ComingSoonButton className="filter-button"><Filter size={15} /> Filters</ComingSoonButton>
@@ -296,7 +300,7 @@ export default function DashboardPage() {
               </div>
 
               {loading ? (
-                <div className="leads-loading">Loading crisis leads…</div>
+                <div className="leads-loading">Loading crisis leads...</div>
               ) : error ? (
                 <div className="leads-error">{error}</div>
               ) : visibleLeads.length === 0 ? (
@@ -326,8 +330,8 @@ export default function DashboardPage() {
                             <div className="lead-business-name">{lead.business_name}</div>
                             <div className="lead-niche">{lead.niche}</div>
                           </td>
-                          <td><span className="lead-stars">{"★".repeat(lead.stars)} {lead.stars}.0</span></td>
-                          <td><span className="lead-review-text" title={lead.review_text}>{lead.review_text || "—"}</span></td>
+                          <td><span className="lead-stars">{"*".repeat(lead.stars)} {lead.stars}.0</span></td>
+                          <td><span className="lead-review-text" title={lead.review_text}>{lead.review_text || "-"}</span></td>
                           <td><span className="lead-time">{lead.hours_ago < 1 ? "just now" : `${Math.round(lead.hours_ago)}h ago`}</span></td>
                           <td>
                             <select

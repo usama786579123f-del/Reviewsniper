@@ -10,6 +10,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import AuthPage from "./pages/Home";
 import DashboardPage from "./pages/Dashboard";
+import CrisisLeadsPage from "./pages/CrisisLeads";
 
 function Router() {
   return (
@@ -18,6 +19,7 @@ function Router() {
       <Route path="/login" component={AuthPage} />
       <Route path="/signup" component={AuthPage} />
       <Route path="/dashboard" component={DashboardPage} />
+      <Route path="/crisis-leads" component={CrisisLeadsPage} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>
