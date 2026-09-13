@@ -5,6 +5,7 @@
 import { FormEvent, useMemo, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { toast } from "sonner";
+import axios from "axios";
 import {
   ArrowRight,
   Check,
@@ -54,7 +55,7 @@ export default function AuthPage() {
   const isSignup = location === "/signup";
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const copy = useMemo(() => {
     if (isSignup) {
@@ -83,13 +84,29 @@ export default function AuthPage() {
     };
   }, [isSignup]);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSubmitted(true);
-    toast.success("Demo session started", {
-      description: "The dashboard opened locally. Connect your backend for real authentication.",
-    });
-    setLocation("/dashboard");
+    const form = new FormData(event.currentTarget);
+    const email = String(form.get("email") || "").trim();
+    const password = String(form.get("password") || "");
+    const name = String(form.get("name") || "").trim();
+
+    setLoading(true);
+    try {
+      if (isSignup) {
+        await axios.post("/api/auth/signup", { name, email, password });
+        toast.success("Account created");
+      } else {
+        await axios.post("/api/auth/login", { email, password });
+        toast.success("Welcome back");
+      }
+      setLocation("/dashboard");
+    } catch (err: any) {
+      const message = err?.response?.data?.error || "Something went wrong. Please try again.";
+      toast.error(message);
+    } finally {
+      setLoading(false);
+    }
   }
 
   function showComingSoon(label: string) {
@@ -158,7 +175,7 @@ export default function AuthPage() {
                 {!isSignup && <button type="button" className="text-action" onClick={() => showComingSoon("Password recovery")}>Forgot password?</button>}
               </div>
 
-              <button type="submit" className="primary-button">{submitted ? "Ready to connect" : copy.submit}<ArrowRight size={17} /></button>
+              <button type="submit" className="primary-button" disabled={loading}>{loading ? "Please wait..." : copy.submit}<ArrowRight size={17} /></button>
             </form>
 
             <div className="or-divider"><span>OR</span></div>

@@ -51,6 +51,14 @@ type Stats = {
 
 type Pagination = { page: number; limit: number; total: number; totalPages: number };
 
+function timeAgo(scrapedAt: string): string {
+  const hours = (Date.now() - new Date(scrapedAt).getTime()) / (1000 * 60 * 60);
+  if (hours < 1) return "just now";
+  if (hours < 24) return `${Math.round(hours)}h ago`;
+  const days = Math.floor(hours / 24);
+  return `${days}d ago`;
+}
+
 function ComingSoonButton({ children, className = "", onClick }: { children: React.ReactNode; className?: string; onClick?: () => void }) {
   return (
     <button
@@ -247,7 +255,7 @@ export default function DashboardPage() {
                       </td>
                       <td><span className="lead-stars">{"*".repeat(lead.stars)} {lead.stars}.0</span></td>
                       <td><span className="lead-review-text" title={lead.review_text}>{lead.review_text || "-"}</span></td>
-                      <td><span className="lead-time">{lead.hours_ago < 1 ? "just now" : `${Math.round(lead.hours_ago)}h ago`}</span></td>
+                      <td><span className="lead-time">{timeAgo(lead.scraped_at)}</span></td>
                       <td>
                         <select
                           aria-label={`Status for ${lead.business_name}`}

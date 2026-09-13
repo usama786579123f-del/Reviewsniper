@@ -6,6 +6,7 @@ import { fileURLToPath } from "url";
 import leadsRouter from "./routes/leads.js";
 import agenciesRouter from "./routes/agencies.js";
 import authRouter from "./routes/auth.js";
+import emailAlertsRouter from "./routes/email-alerts.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,6 +21,7 @@ async function startServer() {
   app.use("/api", leadsRouter);
   app.use("/api", agenciesRouter);
   app.use("/api", authRouter);
+  app.use("/api", emailAlertsRouter);
 
   if (isProd) {
     const staticPath = path.resolve(__dirname, "public");

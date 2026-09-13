@@ -20,7 +20,6 @@ const ExportLeadsPage = lazy(() => import("./pages/ExportLeads"));
 const AnalyticsPage = lazy(() => import("./pages/Analytics"));
 const EmailAlertsPage = lazy(() => import("./pages/EmailAlerts"));
 const AgenciesPage = lazy(() => import("./pages/Agencies"));
-const TeamMembersPage = lazy(() => import("./pages/TeamMembers"));
 
 function PageLoading() {
   return <div style={{ padding: 40, textAlign: "center", color: "#93a0b2", fontSize: 12 }}>Loading...</div>;
@@ -40,7 +39,6 @@ function Router() {
         <Route path="/analytics" component={AnalyticsPage} />
         <Route path="/email-alerts" component={EmailAlertsPage} />
         <Route path="/agencies" component={AgenciesPage} />
-        <Route path="/team-members" component={TeamMembersPage} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
       </Switch>

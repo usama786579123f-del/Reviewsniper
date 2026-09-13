@@ -49,7 +49,15 @@ function splitNiche(niche: string): { tag: string; place: string } {
   return { tag: niche, place: "" };
 }
 
-const US_CITIES = ["miami", "houston", "dallas", "tampa", "atlanta"];
+function timeAgo(scrapedAt: string): string {
+  const hours = (Date.now() - new Date(scrapedAt).getTime()) / (1000 * 60 * 60);
+  if (hours < 1) return "just now";
+  if (hours < 24) return `${Math.round(hours)}h ago`;
+  const days = Math.floor(hours / 24);
+  return `${days}d ago`;
+}
+
+const US_CITIES = ["miami", "houston", "dallas", "tampa", "atlanta", "los angeles", "chicago"];
 function countryForPlace(place: string): { flag: string; country: string } {
   const p = place.toLowerCase();
   if (p.includes("dubai") || p.includes("abu dhabi") || p.includes("uae")) {
@@ -287,7 +295,7 @@ export default function CrisisLeadsPage() {
                         </td>
                         <td>
                           <span className="lead-review-text" title={lead.review_text}>{lead.review_text || "-"}</span>
-                          <div className="lead-time">{lead.hours_ago < 1 ? "just now" : `${Math.round(lead.hours_ago)}h ago`}</div>
+                          <div className="lead-time">{timeAgo(lead.scraped_at)}</div>
                         </td>
                         <td>
                           {lead.phone ? <span className="lead-time">{lead.phone}</span> : "-"}
@@ -329,7 +337,7 @@ export default function CrisisLeadsPage() {
                             </select>
                           </div>
                         </td>
-                        <td><span className="lead-time">{lead.hours_ago < 1 ? "just now" : `${Math.round(lead.hours_ago)}h ago`}</span></td>
+                        <td><span className="lead-time">{timeAgo(lead.scraped_at)}</span></td>
                       </tr>
                     );
                   })}

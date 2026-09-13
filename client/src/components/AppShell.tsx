@@ -21,7 +21,6 @@ import {
   Settings,
   Target,
   TrendingUp,
-  UsersRound,
   X,
 } from "lucide-react";
 
@@ -46,7 +45,6 @@ const primaryNav = [
 
 const secondaryNav = [
   { label: "Subscription", icon: LifeBuoy, href: "#" },
-  { label: "Team Members", icon: UsersRound, href: "/team-members" },
   { label: "Settings", icon: Settings, href: "#" },
 ];
 

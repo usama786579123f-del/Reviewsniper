@@ -285,7 +285,8 @@ kbd { padding: 3px 5px; border: 1px solid #e5ebf3; border-radius: 4px; color: #a
 .empty-leads p { max-width: 390px; margin: 9px auto 19px; color: #96a3b5; font-size: 10px; line-height: 1.65; }
 .table-footer { display: flex; align-items: center; justify-content: space-between; padding: 13px 20px; border-top: 1px solid #edf1f6; color: #a1adbd; font-size: 9px; }
 
-.leads-table-wrap { overflow-x: auto; }
+.leads-table-wrap { overflow-x: auto; overflow-y: auto; max-height: 560px; }
+.leads-table thead th { position: sticky; top: 0; background: #fff; z-index: 1; }
 .leads-table { width: 100%; border-collapse: collapse; font-size: 10px; }
 .leads-table thead th { padding: 10px 20px; color: #93a0b2; font-size: 9px; font-weight: 800; text-align: left; text-transform: uppercase; letter-spacing: .03em; border-bottom: 1px solid #edf1f6; white-space: nowrap; }
 .leads-table tbody td { padding: 13px 20px; color: #45577a; border-bottom: 1px solid #f2f5f9; vertical-align: middle; }
