@@ -14,11 +14,9 @@ import {
   CircleHelp,
   Download,
   LayoutDashboard,
-  LifeBuoy,
   Mail,
   Menu,
   Search,
-  Settings,
   Target,
   TrendingUp,
   X,
@@ -41,11 +39,6 @@ const primaryNav = [
   { label: "Agencies", icon: Building2, href: "/agencies" },
   { label: "Export Leads", icon: Download, href: "/export-leads" },
   { label: "Analytics", icon: BarChart3, href: "/analytics" },
-];
-
-const secondaryNav = [
-  { label: "Subscription", icon: LifeBuoy, href: "#" },
-  { label: "Settings", icon: Settings, href: "#" },
 ];
 
 export default function AppShell({
@@ -85,23 +78,6 @@ export default function AppShell({
               {badges[label] !== undefined && <span className="nav-badge">{badges[label]}</span>}
             </a>
           ))}
-        </nav>
-        <div className="sidebar-divider" />
-        <div className="sidebar-section-label">Manage</div>
-        <nav className="side-nav" aria-label="Workspace settings">
-          {secondaryNav.map(({ label, icon: Icon, href }) =>
-            href === "#" ? (
-              <button key={label} className="side-nav-item" onClick={() => toast.info(`${label} is ready for connection`)}>
-                <Icon size={17} />
-                <span>{label}</span>
-              </button>
-            ) : (
-              <a key={label} href={href} className={`side-nav-item ${activeLabel === label ? "side-nav-item--active" : ""}`}>
-                <Icon size={17} />
-                <span>{label}</span>
-              </a>
-            )
-          )}
         </nav>
         <div className="sidebar-promo">
           <div className="sidebar-promo-icon"><TrendingUp size={16} /></div>
