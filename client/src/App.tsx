@@ -1,15 +1,13 @@
 /*
- * Crisis Command / Airy Precision: route wiring keeps auth presentation and the
- * honest, connection-ready dashboard separated without implying backend behavior.
+ * Route wiring: "/" and the old auth URLs go straight to the dashboard.
  */
 import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
-import { Route, Switch } from "wouter";
+import { Redirect, Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import AuthPage from "./pages/Home";
 
 // Lazy-load every workspace page so the browser only downloads the code for
 // the page you're actually viewing, instead of one giant bundle up front.
@@ -29,9 +27,9 @@ function Router() {
   return (
     <Suspense fallback={<PageLoading />}>
       <Switch>
-        <Route path="/" component={AuthPage} />
-        <Route path="/login" component={AuthPage} />
-        <Route path="/signup" component={AuthPage} />
+        <Route path="/"><Redirect to="/dashboard" /></Route>
+        <Route path="/login"><Redirect to="/dashboard" /></Route>
+        <Route path="/signup"><Redirect to="/dashboard" /></Route>
         <Route path="/dashboard" component={DashboardPage} />
         <Route path="/crisis-leads" component={CrisisLeadsPage} />
         <Route path="/saved-leads" component={SavedLeadsPage} />
