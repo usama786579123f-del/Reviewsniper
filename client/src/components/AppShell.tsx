@@ -12,6 +12,7 @@ import {
   Building2,
   ChevronDown,
   CircleHelp,
+  Crosshair,
   Download,
   LayoutDashboard,
   Mail,
@@ -25,7 +26,21 @@ import {
 function BrandLockup() {
   return (
     <div className="dashboard-brand">
-      <img src="/images/logo.png" alt="ReviewSniper logo" style={{ width: 26, height: 26, objectFit: "contain" }} />
+      <span
+        aria-hidden="true"
+        style={{
+          width: 30,
+          height: 30,
+          borderRadius: 8,
+          background: "#2563eb",
+          display: "inline-flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexShrink: 0,
+        }}
+      >
+        <Crosshair size={18} color="#ffffff" strokeWidth={2.2} />
+      </span>
       <div className="dashboard-brand-name"><span>Review</span><strong>Sniper</strong></div>
     </div>
   );
